@@ -22,7 +22,6 @@ services:
     restart: on-failure
 
   config-server:
-    image: wdd1016/config
     build:
       context: https://github.com/Team4-Kitcha/Kitcha-BE.git
       dockerfile: Config-server/Dockerfile
@@ -42,7 +41,6 @@ services:
     restart: on-failure
 
   eureka:
-    image: wdd1016/eureka
     build:
       context: https://github.com/Team4-Kitcha/Kitcha-BE.git
       dockerfile: eureka/Dockerfile
@@ -62,7 +60,6 @@ services:
     restart: on-failure
 
   gateway-server:
-    image: wdd1016/gateway
     build:
       context: https://github.com/Team4-Kitcha/Kitcha-BE.git
       dockerfile: API-Gateway/Dockerfile
@@ -85,7 +82,6 @@ services:
     restart: on-failure
 
   auth:
-    image: wdd1016/auth
     build:
       context: https://github.com/Team4-Kitcha/Kitcha-Authentication.git
     environment:
@@ -116,7 +112,6 @@ services:
     restart: on-failure
 
   article:
-    image: wdd1016/article
     build:
       context: https://github.com/Team4-Kitcha/Kitcha-Article.git
     environment:
@@ -138,7 +133,6 @@ services:
     restart: on-failure
 
   board:
-    image: wdd1016/board
     build:
       context: https://github.com/Team4-Kitcha/Kitcha-Board.git
     environment:
@@ -160,7 +154,6 @@ services:
     restart: on-failure
 
   frontend:
-    image: wdd1016/frontend
     build:
       context: https://github.com/Team4-Kitcha/Kitcha-FE.git
       args:
