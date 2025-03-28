@@ -16,3 +16,6 @@
 [submodule "Config"]
 	path = Config
 	url = https://github.com/InspireCampTeam3/Config.git
+[submodule "Kitcha-Interest"]
+	path = Kitcha-Interest
+	url = https://github.com/InspireCampTeam3/Kitcha-Interest
