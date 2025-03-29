@@ -23,7 +23,7 @@ services:
 
   config-server:
     build:
-      context: https://github.com/Team4-Kitcha/Kitcha-BE.git
+      context: https://github.com/InspireCampTeam3/Kitcha-BE.git
       dockerfile: Config-server/Dockerfile
     container_name: config-server
     networks:
@@ -42,7 +42,7 @@ services:
 
   eureka:
     build:
-      context: https://github.com/Team4-Kitcha/Kitcha-BE.git
+      context: https://github.com/InspireCampTeam3/Kitcha-BE.git
       dockerfile: eureka/Dockerfile
     container_name: eureka
     networks:
@@ -61,7 +61,7 @@ services:
 
   gateway-server:
     build:
-      context: https://github.com/Team4-Kitcha/Kitcha-BE.git
+      context: https://github.com/InspireCampTeam3/Kitcha-BE.git
       dockerfile: API-Gateway/Dockerfile
     environment:
       TOKEN_SECRET: ${TOKEN_SECRET}
@@ -83,7 +83,7 @@ services:
 
   auth:
     build:
-      context: https://github.com/Team4-Kitcha/Kitcha-Authentication.git
+      context: https://github.com/InspireCampTeam3/Kitcha-Authentication.git
     environment:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
@@ -113,7 +113,7 @@ services:
 
   article:
     build:
-      context: https://github.com/Team4-Kitcha/Kitcha-Article.git
+      context: https://github.com/InspireCampTeam3/Kitcha-Article.git
     environment:
       NAVER_CLIENT_ID: ${NAVER_CLIENT_ID}
       NAVER_CLIENT_SECRET: ${NAVER_CLIENT_SECRET}
@@ -135,11 +135,14 @@ services:
 
   board:
     build:
-      context: https://github.com/Team4-Kitcha/Kitcha-Board.git
+      context: https://github.com/InspireCampTeam3/Kitcha-Board.git
     environment:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_S3_BUCKET: ${AWS_S3_BUCKET}
     container_name: board
     networks:
       - kitcha_network
@@ -156,7 +159,7 @@ services:
 
   frontend:
     build:
-      context: https://github.com/Team4-Kitcha/Kitcha-FE.git
+      context: https://github.com/InspireCampTeam3/Kitcha-FE.git
       args:
         VITE_API_BASE_URL: ${VITE_API_BASE_URL}
     container_name: frontend
