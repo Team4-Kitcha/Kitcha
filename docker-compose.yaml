@@ -1,4 +1,25 @@
 services:
+  broker:
+    image: apache/kafka:latest
+    ports:
+      - "9092:9092"
+    container_name: broker
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_LISTENERS: PLAINTEXT://broker:9092,CONTROLLER://broker:9093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://broker:9092
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@broker:9093
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_NUM_PARTITIONS: 3
+      KAFKA_DELETE_TOPIC_ENABLE: "true"
+    networks:
+      - kitcha_network
   mysql:
     image: mysql:8.0
     environment:
@@ -7,7 +28,7 @@ services:
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     container_name: mysql
-    volumes:
+    volumes: 
       - mysql_data:/var/lib/mysql
       - /sys/fs/cgroup
     networks:
@@ -40,8 +61,8 @@ services:
 
   eureka:
     build:
-      # context: https://github.com/InspireCampTeam3/Kitcha-BE.git
-      context: ./Kitcha-BE
+      context: https://github.com/InspireCampTeam3/Kitcha-BE.git
+      # context: ./Kitcha-BE
       dockerfile: eureka/Dockerfile
     container_name: eureka
     networks:
@@ -61,7 +82,7 @@ services:
   gateway-server:
     build:
       context: https://github.com/InspireCampTeam3/Kitcha-BE.git
-      #      context: ./Kitcha-BE
+      # context: ./Kitcha-BE
       dockerfile: API-Gateway/Dockerfile
     environment:
       TOKEN_SECRET: ${TOKEN_SECRET}
@@ -157,6 +178,31 @@ services:
       - "3307:3306"
     restart: on-failure
 
+  file:
+    build:
+      context: https://github.com/InspireCampTeam3/Kitcha-File.git
+      # context: ./Kitcha-File
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_S3_BUCKET: ${AWS_S3_BUCKET}
+    container_name: file
+    networks:
+      - kitcha_network
+    expose:
+      - "8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      eureka:
+        condition: service_healthy
+      gateway-server:
+        condition: service_healthy
+    restart: on-failure
+
   article:
     build:
       context: https://github.com/InspireCampTeam3/Kitcha-Article.git
@@ -183,7 +229,7 @@ services:
   board:
     build:
       context: https://github.com/InspireCampTeam3/Kitcha-Board.git
-    #      context: ./Kitcha-Board
+      # context: ./Kitcha-Board
     environment:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
@@ -208,7 +254,7 @@ services:
   frontend:
     build:
       context: https://github.com/InspireCampTeam3/Kitcha-FE.git
-      #      context: ./Kitcha-FE
+      # context: ./Kitcha-FE
       args:
         VITE_API_BASE_URL: ${VITE_API_BASE_URL}
     container_name: frontend
