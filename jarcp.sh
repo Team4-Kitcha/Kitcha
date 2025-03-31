@@ -9,6 +9,8 @@ modules=(
   "Kitcha-Article"
   "Kitcha-Authentication"
   "Kitcha-Board"
+  "Kitcha-Interest"
+  "Kitcha-File"
   "Kitcha-BE/API-Gateway"
   "Kitcha-BE/Config-server"
   "Kitcha-BE/eureka"
