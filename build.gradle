@@ -6,3 +6,9 @@ allprojects {
         mavenCentral()
     }
 }
+
+subprojects {
+    tasks.withType(Jar) {
+        archiveFileName = "${project.name}.jar"
+    }
+}
