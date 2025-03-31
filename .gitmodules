@@ -19,3 +19,6 @@
 [submodule "Kitcha-Interest"]
 	path = Kitcha-Interest
 	url = https://github.com/InspireCampTeam3/Kitcha-Interest
+[submodule "Kitcha-File"]
+	path = Kitcha-File
+	url = https://github.com/InspireCampTeam3/Kitcha-File.git
