@@ -1,18 +1,24 @@
 [submodule "Kitcha-BE"]
 	path = Kitcha-BE
-	url = https://github.com/Team4-Kitcha/Kitcha-BE.git
+	url = https://github.com/InspireCampTeam3/Kitcha-BE.git
 [submodule "Kitcha-FE"]
 	path = Kitcha-FE
-	url = https://github.com/Team4-Kitcha/Kitcha-FE.git
+	url = https://github.com/InspireCampTeam3/Kitcha-FE.git
 [submodule "Kitcha-Article"]
 	path = Kitcha-Article
-	url = https://github.com/Team4-Kitcha/Kitcha-Article.git
+	url = https://github.com/InspireCampTeam3/Kitcha-Article.git
 [submodule "Kitcha-Board"]
 	path = Kitcha-Board
-	url = https://github.com/Team4-Kitcha/Kitcha-Board.git
+	url = https://github.com/InspireCampTeam3/Kitcha-Board.git
 [submodule "Kitcha-Authentication"]
 	path = Kitcha-Authentication
-	url = https://github.com/Team4-Kitcha/Kitcha-Authentication.git
+	url = https://github.com/InspireCampTeam3/Kitcha-Authentication.git
 [submodule "Config"]
 	path = Config
-	url = https://github.com/Team4-Kitcha/Config.git
+	url = https://github.com/InspireCampTeam3/Config.git
+[submodule "Kitcha-Interest"]
+	path = Kitcha-Interest
+	url = https://github.com/InspireCampTeam3/Kitcha-Interest
+[submodule "Kitcha-File"]
+	path = Kitcha-File
+	url = https://github.com/InspireCampTeam3/Kitcha-File.git

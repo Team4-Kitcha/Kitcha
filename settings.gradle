@@ -1,0 +1,18 @@
+rootProject.name = 'Kitcha'
+
+// 루트 하위 모듈들
+include 'Kitcha-Article'
+include 'Kitcha-Authentication'
+include 'Kitcha-Board'
+include 'Kitcha-Interest'
+include 'Kitcha-File'
+
+// 중첩된 BE 모듈들
+include 'API-Gateway'
+project(':API-Gateway').projectDir = file('Kitcha-BE/API-Gateway')
+
+include 'Config-server'
+project(':Config-server').projectDir = file('Kitcha-BE/Config-server')
+
+include 'eureka'
+project(':eureka').projectDir = file('Kitcha-BE/eureka')

@@ -1,0 +1,14 @@
+allprojects {
+    group = 'com.kitcha'
+    version = '1.0.0'
+
+    repositories {
+        mavenCentral()
+    }
+}
+
+subprojects {
+    tasks.withType(Jar) {
+        archiveFileName = "${project.name}.jar"
+    }
+}
