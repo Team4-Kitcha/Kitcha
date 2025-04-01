@@ -37,7 +37,7 @@ services:
       test: [ "CMD", "mysqladmin", "-u", "${MYSQL_USER}","-p${MYSQL_PASSWORD}", "ping", "-h", "localhost" ]
       interval: 5s
       timeout: 5s
-      retries: 3
+      retries: 10
     ports:
       - "3308:3306"
     restart: on-failure
@@ -54,7 +54,7 @@ services:
       test: [ "CMD", "curl", "-f", "http://localhost:8071/actuator/health" ]
       interval: 5s
       timeout: 5s
-      retries: 3
+      retries: 10
     expose:
       - "8071"
     restart: on-failure
@@ -71,7 +71,7 @@ services:
       test: [ "CMD", "curl", "-f", "http://localhost:8761/actuator/health" ]
       interval: 5s
       timeout: 5s
-      retries: 3
+      retries: 10
     ports:
       - "8761:8761"
     depends_on:
@@ -94,7 +94,7 @@ services:
       test: [ "CMD", "curl", "-f", "http://localhost:8072/actuator/health" ]
       interval: 5s
       timeout: 5s
-      retries: 3
+      retries: 10
     ports:
       - "8072:8072"
     depends_on:
@@ -121,7 +121,7 @@ services:
       test: [ "CMD", "curl", "-f", "http://localhost:8091/actuator/health" ]
       interval: 10s
       timeout: 5s
-      retries: 10
+      retries: 100
     expose:
       - "8091"
     depends_on:
@@ -173,7 +173,7 @@ services:
       test: [ "CMD", "mysqladmin", "-u", "${MYSQL_USER}","-p${MYSQL_PASSWORD}", "ping", "-h", "localhost" ]
       interval: 10s
       timeout: 5s
-      retries: 3
+      retries: 10
     ports:
       - "3307:3306"
     restart: on-failure
@@ -228,12 +228,12 @@ services:
 
   board:
     build:
-      context: https://github.com/InspireCampTeam3/Kitcha-Board.git
-      # context: ./Kitcha-Board
+      # context: https://github.com/InspireCampTeam3/Kitcha-Board.git
+      context: ./Kitcha-Board
     environment:
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MONGO_DATABASE: ${MYSQL_DATABASE}
+      MONGO_USER: ${MYSQL_USER}
+      MONGO_PASSWORD: ${MYSQL_PASSWORD}
       AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
       AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
       AWS_S3_BUCKET: ${AWS_S3_BUCKET}
@@ -265,9 +265,30 @@ services:
         condition: service_healthy
     restart: on-failure
 
+  mongo:
+    image: mongo
+    container_name: mongo
+    environment:
+      MONGO_INITDB_DATABASE: ${MYSQL_DATABASE}
+      MONGO_INITDB_ROOT_USERNAME: ${MYSQL_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+    networks:
+      - kitcha_network
+    ports:
+      - "27017:27017"
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.runCommand({ ping: 1 })"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    restart: on-failure
+
 volumes:
   mysql_data:
   mariadb_data:
 
 networks:
   kitcha_network:
+
